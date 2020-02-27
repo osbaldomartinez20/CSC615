@@ -1,7 +1,7 @@
 /**************************************************************
 * Class: CSC-615-01 Spring 2020
-* Name:
-* Student ID:
+* Name: Osbaldo Martinez
+* Student ID: 916754207
 * Project: <Assignment 1 - Traffic Light>
 *
 * File: <assigment1b.c>
@@ -11,7 +11,7 @@
 **************************************************************/
 #include <stdio.h>
 #include <string.h>
-//#include <unistd.h>
+#include <unistd.h>
 #include "assigment1b.h"
 
 #define OUTPUT  "out"
@@ -20,6 +20,7 @@
 #define RED     "17"
 #define YELLOW  "27"
 #define GREEN   "22"
+#define CYCLE    3
 
 void pinMode(char *pin, char *mode) {
     FILE *export;
@@ -38,7 +39,7 @@ void pinMode(char *pin, char *mode) {
 }
 
 void digitalWrite(char *pin, char *state) {
-    char path[] = "/sys/class/gpio/gpio"
+    char path[] = "/sys/class/gpio/gpio";
     strcat(path, pin);
     strcat(path, "/value");
 
@@ -55,27 +56,38 @@ void cleanUp(char *pin) {
     fclose(unexport);
 }
 
-int main(void) {
+void pinSet() {
     pinMode(RED, OUTPUT);
     pinMode(YELLOW, OUTPUT);
     pinMode(GREEN, OUTPUT);
+}
 
-    int cycle = 3;
-    for (int i = 0; i < 3; ++i) {
-        digitalWrite(GREEN, HIGH);
-        //sleep(6);
-        digitalWrite(GREEN, LOW);
+void pinWrite() {
+    digitalWrite(GREEN, HIGH);
+    sleep(6);
+    digitalWrite(GREEN, LOW);
 
-        digitalWrite(YELLOW, HIGH);
-        //sleep(1.5);
-        digitalWrite(YELLOW, LOW);
+    digitalWrite(YELLOW, HIGH);
+    sleep(1.5);
+    digitalWrite(YELLOW, LOW);
 
-        digitalWrite(RED, HIGH);
-        //sleep(5);
-        digitalWrite(RED, LOW);
-    }
+    digitalWrite(RED, HIGH);
+    sleep(5);
+    digitalWrite(RED, LOW);
+}
 
+void pinClean() {
     cleanUp(GREEN);
     cleanUp(YELLOW);
     cleanUp(RED);
+}
+
+int main(void) {
+    pinSet();
+
+    for (int i = 0; i < CYCLE; ++i) {
+        pinWrite();
+    }
+
+    pinClean();
 }

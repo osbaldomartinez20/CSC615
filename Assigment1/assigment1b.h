@@ -1,7 +1,7 @@
 /**************************************************************
 * Class: CSC-615-01 Spring 2020
-* Name:
-* Student ID:
+* Name: Osbaldo Martinez
+* Student ID: 916754207
 * Project: <Assignment 1 - Traffic Light>
 *
 * File: <assigment1b.h>
@@ -15,5 +15,8 @@
 void pinMode(char *pin, char *mode);
 void digitalWrite(char *pin, char *state);
 void cleanUp(char *pin);
+void pinSet();
+void pinWrite();
+void pinClean();
 
 #endif
