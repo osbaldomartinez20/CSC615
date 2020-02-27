@@ -20,7 +20,7 @@
 #define RED     "17"
 #define YELLOW  "27"
 #define GREEN   "22"
-#define CYCLE    3
+#define CYCLES   3
 
 void pinMode(char *pin, char *mode) {
     FILE *export;
@@ -85,9 +85,11 @@ void pinClean() {
 int main(void) {
     pinSet();
 
-    for (int i = 0; i < CYCLE; ++i) {
+    for (int i = 0; i < CYCLES; ++i) {
         pinWrite();
     }
 
     pinClean();
+
+    return 0;
 }
