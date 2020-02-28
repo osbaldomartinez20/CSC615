@@ -10,6 +10,7 @@
 *
 **************************************************************/
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "assigment1b.h"
@@ -24,46 +25,50 @@
 
 void pinMode(char *pin, char *mode) {
     FILE *export;
-    while(export == NULL) {
-        export = fopen("/sys/class/gpio/export", "w");
+    export = fopen("/sys/class/gpio/export", "w");
+    if(export == NULL) {
+        printf("Error! Could not open /sys/class/gpio/export\n"); 
+        exit(-1);
     }
-
     fwrite(pin, 1, sizeof(pin), export);
     fclose(export);
 
-    char path[] = "/sys/class/gpio/gpio";
+    char *path = "/sys/class/gpio/gpio";
     strcat(path,pin);
     strcat(path,"/direction");
 
     FILE *direction;
-    while(direction == NULL) {
-        direction = fopen(path, "w");
+    direction = fopen(path, "w");
+    if(direction == NULL) {
+        printf("Error! Could not open /sys/class/gpio/gpio%s/direction\n", pin); 
+        exit(-1);
     }
-
     fwrite(mode, 1, sizeof(mode), direction);
     fclose(direction);
 }
 
 void digitalWrite(char *pin, char *state) {
-    char path[] = "/sys/class/gpio/gpio";
+    char *path = "/sys/class/gpio/gpio";
     strcat(path, pin);
     strcat(path, "/value");
 
     FILE *value;
-    while(value == NULL) {
-        value = fopen(path, "w");
+    value = fopen(path, "w");
+    if(value == NULL) {
+        printf("Error! Could not open /sys/class/gpio/gpio%s/value\n", pin); 
+        exit(-1);
     }
-
     fwrite(state, 1, sizeof(state), value);
     fclose(value);
 }
 
-void pinCleanUp(char *pin) {
+void cleanUp(char *pin) {
     FILE *unexport;
-    while(unexport == NULL) {
-        unexport = fopen("/sys/class/gpio/unexport","w");
+    unexport = fopen("/sys/class/gpio/unexport","w");
+    if(unexport == NULL) {
+        printf("Error! Could not open /sys/class/gpio/unexport\n"); 
+        exit(-1);
     }
-
     fwrite(pin, 1, sizeof(pin), unexport);
     fclose(unexport);
 }
@@ -88,10 +93,10 @@ void pinWrite() {
     digitalWrite(RED, LOW);
 }
 
-void pinFlush() {
-    pinCleanUp(GREEN);
-    pinCleanUp(YELLOW);
-    pinCleanUp(RED);
+void pinClean() {
+    cleanUp(GREEN);
+    cleanUp(YELLOW);
+    cleanUp(RED);
 }
 
 int main(void) {
@@ -104,7 +109,7 @@ int main(void) {
         pinWrite();
     }
     
-    pinFlush();
+    pinClean();
 
     return 0;
 }
