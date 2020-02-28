@@ -26,7 +26,7 @@ void pinMode(char *pin, char *mode) {
     export = fopen("/sys/class/gpio/export", "w");
     if(export == NULL) {
         printf("Error! Could not open /sys/class/gpio/export\n"); 
-        exit(-1);
+        return -1;
     }
     fwrite(pin, 1, sizeof(pin), export);
     fclose(export);
@@ -52,9 +52,9 @@ void digitalWrite(char *pin, char *state) {
 
     FILE *value;
     value = fopen(path, "w");
-    if(direction == NULL) {
+    if(value == NULL) {
         printf("Error! Could not open /sys/class/gpio/gpio%s/value\n", pin); 
-        exit(-1);
+        return -1;
     }
     fwrite(state, 1, sizeof(state), value);
     fclose(value);
@@ -63,9 +63,9 @@ void digitalWrite(char *pin, char *state) {
 void cleanUp(char *pin) {
     FILE *unexport;
     unexport = fopen("/sys/class/gpio/unexport","w");
-    if(direction == NULL) {
+    if(unexport == NULL) {
         printf("Error! Could not open /sys/class/gpio/unexport\n"); 
-        exit(-1);
+        return -1;
     }
     fwrite(pin, 1, sizeof(pin), unexport);
     fclose(unexport);
