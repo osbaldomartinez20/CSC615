@@ -10,6 +10,7 @@
 *
 **************************************************************/
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -26,7 +27,7 @@ void pinMode(char *pin, char *mode) {
     export = fopen("/sys/class/gpio/export", "w");
     if(export == NULL) {
         printf("Error! Could not open /sys/class/gpio/export\n"); 
-        return -1;
+        exit(-1);
     }
     fwrite(pin, 1, sizeof(pin), export);
     fclose(export);
@@ -54,7 +55,7 @@ void digitalWrite(char *pin, char *state) {
     value = fopen(path, "w");
     if(value == NULL) {
         printf("Error! Could not open /sys/class/gpio/gpio%s/value\n", pin); 
-        return -1;
+        exit(-1);
     }
     fwrite(state, 1, sizeof(state), value);
     fclose(value);
@@ -65,7 +66,7 @@ void cleanUp(char *pin) {
     unexport = fopen("/sys/class/gpio/unexport","w");
     if(unexport == NULL) {
         printf("Error! Could not open /sys/class/gpio/unexport\n"); 
-        return -1;
+        exit(-1);
     }
     fwrite(pin, 1, sizeof(pin), unexport);
     fclose(unexport);
