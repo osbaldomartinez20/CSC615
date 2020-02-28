@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <wiringPi.h>
 
-#define RED 0
+#define RED    0
 #define YELLOW 2
-#define GREEN 3
+#define GREEN  3
+#define CYCLES 3
 
 int main(void) {
-    printf("Raspberry Pi - Gertboard Blink\n");
+    printf("Starting the cycles ...\n");
 
     wiringPiSetup();
 
@@ -14,8 +15,7 @@ int main(void) {
     pinMode(YELLOW, OUTPUT);
     pinMode(GREEN, OUTPUT);
     
-    int cycles = 3;
-    for(int i = 0; i < cycles; ++i) {
+    for(int i = 0; i < CYCLES; ++i) {
         digitalWrite(GREEN, HIGH);
         delay(6000);
         digitalWrite(GREEN, LOW);

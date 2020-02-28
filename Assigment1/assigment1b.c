@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include "assigment1b.h"
 
 #define OUTPUT  "out"
 #define HIGH    "1"
@@ -83,11 +82,15 @@ void pinClean() {
 }
 
 int main(void) {
+    printf("Starting the cycles ...\n");
+
     pinSet();
+    sleep(1); //if not present there will be a segmentation fault
 
     for (int i = 0; i < CYCLES; ++i) {
         pinWrite();
     }
+    sleep(0.1); //if not present there will be a segmentation fault
 
     pinClean();
 
