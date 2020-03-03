@@ -1,3 +1,14 @@
+/**************************************************************
+* Class: CSC-615-01 Spring 2020
+* Name: Osbaldo Martinez
+* Student ID: 916754207
+* Project: <Assignment 1 - Traffic Light>
+*
+* File: <assigment1wpi.c>
+*
+* Description: This file contains the code necesary to run the trafic light
+*              demo using the wiringPi library.
+**************************************************************/
 #include <stdio.h>
 #include <wiringPi.h>
 #include "assigment1wpi.h"
@@ -7,6 +18,8 @@
 #define GREEN  3
 #define CYCLES 3
 
+//This function sets the pins to OUTPUT in order to be able to
+//turn on and off the LED lights connected to the pins defined by their color name variables.
 void pinSet() {
     wiringPiSetup();
 
@@ -15,6 +28,9 @@ void pinSet() {
     pinMode(GREEN, OUTPUT);
 }
 
+//This function is the driving force of the trafic light demo
+//It turns on the LED on(HIGH) for a set time in sec, then it turns it off(LOW) and does the same thing for the next light.
+//It goes through the cycle of GREEN light -> YELLLOW light -> RED light
 void pinWrite() {
     digitalWrite(GREEN, HIGH);
     delay(6000);
@@ -34,6 +50,7 @@ int main(void) {
 
     pinSet();
 
+    //This repeats the trafic light demo a CYCLES number of times.
     for(int i = 0; i < CYCLES; ++i) {
         pinWrite();
     }
