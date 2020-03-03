@@ -29,7 +29,7 @@ void pinSet() {
 }
 
 //This function is the driving force of the trafic light demo
-//It turns on the LED on(HIGH) for a set time in sec, then it turns it off(LOW) and does the same thing for the next light.
+//It turns on the LED on(HIGH) for a set time in milisec, then it turns it off(LOW) and does the same thing for the next light.
 //It goes through the cycle of GREEN light -> YELLLOW light -> RED light
 void pinWrite() {
     digitalWrite(GREEN, HIGH);
