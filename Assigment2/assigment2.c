@@ -11,11 +11,9 @@
 #include <stdio.h>
 #include "echoSensor.h"
 
-#define REPEAT 3
-
 int main(void) {
     pinSet();
-    for (int i = 0; i < REPEAT; i++) {
+    for (; ; ) {
         displayDistance();
     }
     return 0;

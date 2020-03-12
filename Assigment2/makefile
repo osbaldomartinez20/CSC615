@@ -8,7 +8,7 @@ DEPS = echoSensor.h
 OBJ = assigment2.o echoSensor.o 
 
 %.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	sudo $(CC) -c -o $@ $< $(CFLAGS)
 
 assigment2: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) -lwiringPi
+	sudo $(CC) -o $@ $^ $(CFLAGS) -lwiringPi

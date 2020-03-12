@@ -22,6 +22,7 @@
 //this calculates the distance based on the time the echo took
 //to return to the sensor. distance = (time * speed of sound) / 2
 float calculateDistance(float time) {
+    printf("getting distance with time: %f\n", time);
     return (time * SPEED_SOUND) / TWO;
 }
 
@@ -33,8 +34,9 @@ void pinSet(void) {
 }
 
 void prepareTrigger(void) {
+    printf("Preparing trigger.\n");
     digitalWrite(TRIGGER, LOW);
-    sleep(2);
+    sleep(1);
 
     digitalWrite(TRIGGER, HIGH);
     sleep(0.00001);
@@ -42,18 +44,22 @@ void prepareTrigger(void) {
 }
 
 float getTime(void) {
-    float time_start;
-    float time_finish;
+    struct timespec start, end;
 
     while (!digitalRead(ECHO)) {
-        time_start = time(NULL);
+        clock_gettime(CLOCK_MONOTONIC, &start);
     }
 
     while (digitalRead(ECHO)) {
-        time_finish = time(NULL);
+        clock_gettime(CLOCK_MONOTONIC, &end);
     }
 
-    return time_finish - time_start;
+    float total_time;
+    total_time = (end.tv_sec - start.tv_sec) * 1e9;
+    total_time = (total_time + (end.tv_nsec - start.tv_nsec)) * 1e-9;
+
+
+    return total_time;
 }
 
 float getDistance(void) {
@@ -62,5 +68,5 @@ float getDistance(void) {
 }
 
 void displayDistance(void) {
-    printf("The distance is: %.2f cm", getDistance());
+    printf("The distance is: %.2f cm\n", getDistance());
 }
