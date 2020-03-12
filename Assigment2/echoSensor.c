@@ -2,11 +2,15 @@
 * Class: CSC-615-01 Spring 2020
 * Name: Osbaldo Martinez
 * Student ID: 916754207
-* Project: <Assignment 2 - >
+* Project: <Assignment 2 - Tapeless Ruler>
 *
 * File: <echoSensor.c>
 *
-* Description: 
+* Description: The functions in this file help in calculating
+*              the time the echo takes to come back, the distance
+*              between the sensor and an object, setting up the 
+*              GPIO pins, setting up the echo and the trigger in the sensor,
+*              and displaying the data that was calculated.
 **************************************************************/
 #include <stdio.h>
 #include <unistd.h>
@@ -17,15 +21,18 @@
 #define ECHO        22 //GPIO 6
 #define TRIGGER     21 //GPIO 5
 #define SPEED_SOUND 34300.0f //in centimeters per second
-#define TWO         2.0f
+#define TWO         2.0f //two as a float
 
 //this calculates the distance based on the time the echo took
 //to return to the sensor. distance = (time * speed of sound) / 2
+//accepts time as a float and returns the disttance as a float
 float calculateDistance(float time) {
     printf("getting distance with time: %f\n", time);
     return (time * SPEED_SOUND) / TWO;
 }
 
+//This function sets up the pins to be used by
+//the trigger and echop in the sensor.
 void pinSet(void) {
     wiringPiSetup();
 
@@ -33,6 +40,8 @@ void pinSet(void) {
     pinMode(ECHO, INPUT);
 }
 
+//This function prepares the trigger to be used
+//to send and receive the echo.
 void prepareTrigger(void) {
     printf("Preparing trigger.\n");
     digitalWrite(TRIGGER, LOW);
@@ -43,6 +52,8 @@ void prepareTrigger(void) {
     digitalWrite(TRIGGER, LOW);
 }
 
+//calculates the time that it took for the echo
+//to come back to the sensor.
 float getTime(void) {
     struct timespec start, end;
 
@@ -62,11 +73,15 @@ float getTime(void) {
     return total_time;
 }
 
+//Returns the distance as a float. This function first triggers the triggers,
+//then calculates time and finally it returns the calculated distance.
 float getDistance(void) {
     prepareTrigger();
     return calculateDistance(getTime());
 }
 
+//This function displays the distance calculated by how long the
+//echo took to come back.
 void displayDistance(void) {
     printf("The distance is: %.2f cm\n", getDistance());
 }
