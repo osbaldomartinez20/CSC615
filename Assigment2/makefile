@@ -3,7 +3,7 @@
 # Student ID: 916754207
 # Project: <Assignment 2>
 CC=gcc
-CFLAGS=-I.
+CFLAGS= -g -Wall -I.
 DEPS = echoSensor.h
 OBJ = assigment2.o echoSensor.o 
 
@@ -11,4 +11,4 @@ OBJ = assigment2.o echoSensor.o
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 assigment2: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
+	$(CC) -o $@ $^ $(CFLAGS) -lwiringPi
