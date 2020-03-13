@@ -18,8 +18,8 @@
 #include <wiringPi.h>
 #include "echoSensor.h"
 
-#define ECHO        22 //GPIO 6
-#define TRIGGER     21 //GPIO 5
+#define ECHO        22 //GPIO 6 (pin 31)
+#define TRIGGER     21 //GPIO 5 (pin 29)
 #define SPEED_SOUND 34300.0f //in centimeters per second
 #define TWO         2.0f //two as a float
 
