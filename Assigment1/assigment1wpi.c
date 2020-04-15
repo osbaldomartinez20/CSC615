@@ -10,6 +10,9 @@
 *              demo using the wiringPi library.
 **************************************************************/
 #include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include <wiringPi.h>
 #include "assigment1wpi.h"
 
@@ -18,10 +21,44 @@
 #define GREEN  3
 #define CYCLES 3
 
+static uid_t euid, ruid;
+
+void do_setuid (void)
+{
+  int status;
+
+#ifdef _POSIX_SAVED_IDS
+  status = seteuid (euid);
+#else
+  status = setreuid (ruid, euid);
+#endif
+  if (status < 0) {
+    fprintf (stderr, "Couldn't set uid.\n");
+    exit (status);
+    }
+}
+
+void undo_setuid (void)
+{
+  int status;
+
+#ifdef _POSIX_SAVED_IDS
+  status = seteuid (ruid);
+#else
+  status = setreuid (euid, ruid);
+#endif
+  if (status < 0) {
+    fprintf (stderr, "Couldn't set uid.\n");
+    exit (status);
+    }
+}
+
 //This function sets the pins to OUTPUT in order to be able to
 //turn on and off the LED lights connected to the pins defined by their color name variables.
 void pinSet() {
+    do_setuid();
     wiringPiSetup();
+    undo_setuid();
 
     pinMode(RED, OUTPUT);
     pinMode(YELLOW, OUTPUT);
@@ -46,6 +83,10 @@ void pinWrite() {
 }
 
 int main(void) {
+    ruid = getuid ();
+    euid = geteuid ();
+    undo_setuid ();
+
     printf("Starting the cycles ...\n");
 
     pinSet();
