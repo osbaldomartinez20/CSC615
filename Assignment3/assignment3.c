@@ -21,6 +21,7 @@ int main(void) {
     printf("motor run\n");
     runMotors();
 
+    printf("Run motor with power decreasing.")
     runMotorsWithDiffPower();
 
     return 0;

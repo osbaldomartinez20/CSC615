@@ -191,7 +191,7 @@ void runMotors2(void) {
 
     delay(3000);
 
-    printf("motors go F\n");
+    printf("motors go S\n");
     MOTOR_ONE_S;
     MOTOR_TWO_S;
 }
