@@ -27,7 +27,7 @@
 #define MOTOR_TWO_S              motorStop(MOTOR_TWO_ENABLER, MOTOR_TWO_CONTROL, MOTOR_TWO_CONTROL_TWO)
 
 void pinSet(void) {
-    wiringPiSetUp();
+    wiringPiSetup();
 
     pinMode(MOTOR_ONE_ENABLER, OUTPUT);
     pinMode(MOTOR_ONE_CONTROL, OUTPUT);
@@ -61,7 +61,7 @@ void motorMove(int enabler, int control, int control2, int direction) {
         digitalWrite(control2, HIGH);
     } else {
         digitalWrite(control2, LOW);
-        digitalWrite(control, HIGH)
+        digitalWrite(control, HIGH);
     }
 }
 
@@ -94,14 +94,14 @@ void *motorToControlBackward(void *ptr) {
 
 void runMotors(void) {
     pthread_t thread1, thread2;
-    int i1, i2, s1, s2, motor1 = 1, motor2 = 2;
+    int s1, s2, motor1 = 1, motor2 = 2;
     int *m1 = &motor1;
     int *m2 = &motor2;
 
-    if ((s1 = pthread_create(&thread1, NULL, motorToControlForward, (void*) motor1))) {
+    if ((s1 = pthread_create(&thread1, NULL, motorToControlForward, (void*) m1))) {
         printf("thread creation failed: %i\n", s1);
     }
-    if ((s2 = pthread_create(&thread2, NULL, motorToControlForward, (void*) motor2))) {
+    if ((s2 = pthread_create(&thread2, NULL, motorToControlForward, (void*) m2))) {
         printf("thread creation failed: %i\n", s2);
     }
 
@@ -138,7 +138,7 @@ void cleanUp() {
 int main(void) {
 
     signal(SIGINT, cleanUp);
-    
+
     while(1) {
     pinSet();
     motorsSet();
