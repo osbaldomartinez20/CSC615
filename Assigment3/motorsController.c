@@ -131,21 +131,25 @@ void runMotors(void) {
 }
 
 void runMotors2() {
+    printf("motors go F");
     MOTOR_ONE_F;
     MOTOR_TWO_F;
 
     delay(3000);
 
+    printf("motors go S");
     MOTOR_ONE_S;
     MOTOR_TWO_S;
 
     delay(100);
 
+    printf("motors go B");
     MOTOR_ONE_B;
     MOTOR_TWO_B;
 
     delay(3000);
 
+    printf("motors go F");
     MOTOR_ONE_B;
     MOTOR_TWO_B;
 }
