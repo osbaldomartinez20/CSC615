@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <signal.h>
 #include <unistd.h>
 #include <wiringPi.h>
 #include <softPwm.h>
@@ -128,9 +129,21 @@ void runMotors(void) {
     MOTOR_TWO_S;
 }
 
+void cleanUp() {
+    MOTOR_ONE_S;
+    MOTOR_TWO_S;
+    exit(0);
+}
+
 int main(void) {
+
+    signal(SIGINT, cleanUp);
+    
+    while(1) {
     pinSet();
     motorsSet();
 
     runMotors();
+
+    }
 }
