@@ -83,9 +83,9 @@ void *motorToControlForward(void *ptr) {
 }
 
 void *motorToControlBackward(void *ptr) {
-    int *motor;
-    motor = (int *) ptr;
-    if (*motor == 1) {
+    int motor;
+    motor = *((int *) ptr);
+    if (motor == 1) {
         MOTOR_ONE_B;
     } else {
         MOTOR_TWO_B; 
@@ -94,23 +94,27 @@ void *motorToControlBackward(void *ptr) {
 }
 
 void runMotors(void) {
+    printf("initialize vars\n");
     pthread_t thread1, thread2;
     int s1, s2, motor1 = 1, motor2 = 2;
-    int *m1 = &motor1;
-    int *m2 = &motor2;
+    void *m1 = &motor1;
+    void *m2 = &motor2;
 
-    if ((s1 = pthread_create(&thread1, NULL, motorToControlForward, (void*) m1))) {
+    printf("initialize threads\n");
+    if ((s1 = pthread_create(&thread1, NULL, motorToControlForward, m1))) {
         printf("thread creation failed: %i\n", s1);
     }
-    if ((s2 = pthread_create(&thread2, NULL, motorToControlForward, (void*) m2))) {
+    if ((s2 = pthread_create(&thread2, NULL, motorToControlForward, m2))) {
         printf("thread creation failed: %i\n", s2);
     }
 
+    printf("join threads.\n");
     pthread_join( thread1, NULL);
     pthread_join( thread2, NULL);
 
     delay(3000);
 
+    printf("stop motors\n");
     MOTOR_ONE_S;
     MOTOR_TWO_S;
 
@@ -130,28 +134,28 @@ void runMotors(void) {
     MOTOR_TWO_S;
 }
 
-void runMotors2() {
-    printf("motors go F");
+void runMotors2(void) {
+    printf("motors go F\n");
     MOTOR_ONE_F;
     MOTOR_TWO_F;
 
     delay(3000);
 
-    printf("motors go S");
+    printf("motors go S\n");
     MOTOR_ONE_S;
     MOTOR_TWO_S;
 
     delay(100);
 
-    printf("motors go B");
+    printf("motors go B\n");
     MOTOR_ONE_B;
     MOTOR_TWO_B;
 
     delay(3000);
 
-    printf("motors go F");
-    MOTOR_ONE_B;
-    MOTOR_TWO_B;
+    printf("motors go F\n");
+    MOTOR_ONE_S;
+    MOTOR_TWO_S;
 }
 
 void cleanUp() {
@@ -164,9 +168,12 @@ int main(void) {
 
     signal(SIGINT, cleanUp);
 
+    printf("pin set\n");
     pinSet();
+    printf("motor set\n");
     motorsSet();
 
+    printf("motor run\n");
     runMotors();
 
 }
