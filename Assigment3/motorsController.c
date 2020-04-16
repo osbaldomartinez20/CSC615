@@ -95,7 +95,7 @@ void *motorToControlBackward(void *ptr) {
 
 void runMotors(void) {
     printf("initialize vars\n");
-    pthread_t thread1, thread2;
+    pthread_t thread1, thread2, t1, t2;
     int s1, s2, motor1 = 1, motor2 = 2;
     void *m1 = &motor1;
     void *m2 = &motor2;
@@ -118,15 +118,15 @@ void runMotors(void) {
     MOTOR_ONE_S;
     MOTOR_TWO_S;
 
-    if ((s1 = pthread_create(&thread1, NULL, motorToControlBackward, (void*) motor1))) {
+    if ((s1 = pthread_create(&t1, NULL, motorToControlBackward, m1))) {
         printf("thread creation failed: %i\n", s1);
     }
-    if ((s2 = pthread_create(&thread2, NULL, motorToControlBackward, (void*) motor2))) {
+    if ((s2 = pthread_create(&t2, NULL, motorToControlBackward, m2))) {
         printf("thread creation failed: %i\n", s2);
     }
 
-    pthread_join( thread1, NULL);
-    pthread_join( thread2, NULL);
+    pthread_join( t1, NULL);
+    pthread_join( t2, NULL);
 
     delay(3000);
 
