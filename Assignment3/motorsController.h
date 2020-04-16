@@ -8,6 +8,8 @@
 *
 * Description: This header files defines the functions to be
 *              be implemented in motorsController.c
+*              All the included libraries are listed here.
+*              This file also has all the macros being used to make code more readable.
 **************************************************************/
 #ifndef MOTORSCONTROLLER_H_   
 #define MOTORSCONTROLLER_H_
