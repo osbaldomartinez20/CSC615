@@ -130,6 +130,26 @@ void runMotors(void) {
     MOTOR_TWO_S;
 }
 
+void runMotors2() {
+    MOTOR_ONE_F;
+    MOTOR_TWO_F;
+
+    delay(3000);
+
+    MOTOR_ONE_S;
+    MOTOR_TWO_S;
+
+    delay(100);
+
+    MOTOR_ONE_B;
+    MOTOR_TWO_B;
+
+    delay(3000);
+
+    MOTOR_ONE_B;
+    MOTOR_TWO_B;
+}
+
 void cleanUp() {
     MOTOR_ONE_S;
     MOTOR_TWO_S;
@@ -140,11 +160,9 @@ int main(void) {
 
     signal(SIGINT, cleanUp);
 
-    while(1) {
     pinSet();
     motorsSet();
 
     runMotors();
 
-    }
 }
