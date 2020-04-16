@@ -79,7 +79,7 @@ void *motorToControlForward(void *ptr) {
     } else {
         MOTOR_TWO_F;
     }
-
+    return NULL;
 }
 
 void *motorToControlBackward(void *ptr) {
@@ -90,6 +90,7 @@ void *motorToControlBackward(void *ptr) {
     } else {
         MOTOR_TWO_B; 
     }
+    return NULL;
 }
 
 void runMotors(void) {
