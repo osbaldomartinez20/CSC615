@@ -1,30 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <signal.h>
-#include <unistd.h>
-#include <wiringPi.h>
-#include <softPwm.h>
-
-#define MOTOR_ONE_ENABLER        0  //pin 11(GPIO 17)
-#define MOTOR_ONE_CONTROL        2  //pin 13(GPIO 27)
-#define MOTOR_ONE_CONTROL_TWO    3  //pin 15(GPIO 22)
-
-#define MOTOR_TWO_ENABLER        6  //pin 22(GPIO 25)
-#define MOTOR_TWO_CONTROL        4  //pin 16(GPIO 23)
-#define MOTOR_TWO_CONTROL_TWO    5  //pin 18(GPIO 24)
-
-#define FORWARD                  0
-#define BACKWARD                 1
-
-#define MOTOR_ONE_F              motorMove(MOTOR_ONE_ENABLER, MOTOR_ONE_CONTROL, MOTOR_ONE_CONTROL_TWO, FORWARD)
-#define MOTOR_TWO_F              motorMove(MOTOR_TWO_ENABLER, MOTOR_TWO_CONTROL, MOTOR_TWO_CONTROL_TWO, FORWARD)
-
-#define MOTOR_ONE_B              motorMove(MOTOR_ONE_ENABLER, MOTOR_ONE_CONTROL, MOTOR_ONE_CONTROL_TWO, BACKWARD)
-#define MOTOR_TWO_B              motorMove(MOTOR_TWO_ENABLER, MOTOR_TWO_CONTROL, MOTOR_TWO_CONTROL_TWO, BACKWARD)
-
-#define MOTOR_ONE_S              motorStop(MOTOR_ONE_ENABLER, MOTOR_ONE_CONTROL, MOTOR_ONE_CONTROL_TWO)
-#define MOTOR_TWO_S              motorStop(MOTOR_TWO_ENABLER, MOTOR_TWO_CONTROL, MOTOR_TWO_CONTROL_TWO)
+/**************************************************************
+* Class: CSC-615-01 Spring 2020
+* Name: Osbaldo Martinez
+* Student ID: 916754207
+* Project: <Assignment 3 - Motors>
+*
+* File: <motorsController.c>
+*
+* Description: This file contains the functions necessary to make the motors move
+*              forward and backward plus there is a function to make them stop.
+*              There are also functions that cycle through motor movements.
+**************************************************************/
+//All of the documentation of the functions can be found in motorsController.h
+#include "motorsController.h"
 
 void pinSet(void) {
     wiringPiSetup();
@@ -162,18 +149,4 @@ void cleanUp() {
     MOTOR_ONE_S;
     MOTOR_TWO_S;
     exit(0);
-}
-
-int main(void) {
-
-    signal(SIGINT, cleanUp);
-
-    printf("pin set\n");
-    pinSet();
-    printf("motor set\n");
-    motorsSet();
-
-    printf("motor run\n");
-    runMotors();
-
 }
