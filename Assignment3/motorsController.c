@@ -68,7 +68,7 @@ void motorMoveWithDecreasingPow(int enabler, int control, int control2, int dire
 
     pthread_mutex_lock( &mutex1 );
     printf("motor moving:\n");
-    for (int intencity = MAX_INTENCITY; i >= MIN_INTENCITY; i -= 10) {
+    for (int intencity = MAX_INTENCITY; intencity >= MIN_INTENCITY; intencity -= 10) {
         printf("motor power: %i\n", intencity);
         softPwmWrite(enabler, intencity);
         delay(1000);
@@ -198,7 +198,7 @@ void runMotors2(void) {
 
 void runMotorsWithDiffPower(void) {
     printf("initialize vars\n");
-    pthread_t thread1, thread2, t1, t2;
+    pthread_t thread1, thread2;
     int s1, s2, motor1 = 1, motor2 = 2;
     void *m1 = &motor1;
     void *m2 = &motor2;
