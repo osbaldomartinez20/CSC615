@@ -22,4 +22,6 @@ int main(void) {
     runMotors();
 
     runMotorsWithDiffPower();
+
+    return 0;
 }

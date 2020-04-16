@@ -94,10 +94,10 @@ void runMotors(void);
 void runMotors2(void);
 
 //Runs the motors forwards with decreasing power by making use of threads.
-void runMotorsWithDiffPower(void)
+void runMotorsWithDiffPower(void);
 
 //Runs the motors backwards with decreasing power with no threads.
-void runMotorsWithDiffPower2(void)
+void runMotorsWithDiffPower2(void);
 
 //This function stops the motors for a clean exit from program.
 //Use it when detecting a ctr+c just in case motors are running at that time.
