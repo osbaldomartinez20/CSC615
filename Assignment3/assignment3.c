@@ -20,4 +20,6 @@ int main(void) {
 
     printf("motor run\n");
     runMotors();
+
+    runMotorsWithDiffPower();
 }
