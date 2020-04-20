@@ -15,10 +15,14 @@ void speedSensorSet(void) {
 }
 
 void chipSet(void) {
+    wiringPiSetup();
     if (wiringPiSPISetup (CHIP_CHANNEL, CLOCK_SPEED) < 0) {
         printf ("Unable to open SPI device 0:\n") ;
         exit (1) ;
    }
+   pinMode(12, OUTPUT);
+   pinMode(13,INPUT);
+   pinMode(14, OUTPUT);
 }
 
 void writeSpeed(int motor, double speed) {
@@ -39,7 +43,9 @@ double calculateAngularSpeed(int totalPulses, double time) {
 
 int readPulses(double time) {
     int count = 0;
-    double end = millis() + (1000 * time);
+    double start = millis();
+    double end = start + (1000 * time);
+    printf("start: %f, end: %f\n", start, end);
 
     while (end > millis()) {
         if(digitalRead(SPEED_SENSOR_PIN)) {
@@ -47,6 +53,7 @@ int readPulses(double time) {
             while(digitalRead(SPEED_SENSOR_PIN)){}
         }
     }
+    printf("Total count: %d\n", count)
 
     return count;
 }
@@ -67,14 +74,14 @@ void getDataFromChip(void) {
     wiringPiSPIDataRW (CHIP_CHANNEL, command, COMMAND_LENGTH);
 
     //write data to chip
-    command[0] = 1; //B7
+    command[0] = 0; //B7
     command[1] = 0; //B6
-    command[2] = 1; //B5
+    command[2] = 0; //B5
     command[3] = 0; //B4
     command[4] = 0; //B3
     command[5] = 0; //B2
-    command[6] = 1; //B1
-    command[7] = 1; //B0
+    command[6] = 0; //B1
+    command[7] = 0; //B0
     wiringPiSPIDataRW (CHIP_CHANNEL, command, COMMAND_LENGTH);
 
     delay(1000 * TIME_TO_MEASURE);
@@ -82,9 +89,9 @@ void getDataFromChip(void) {
     //reads the data
     command[0] = 0; //B7
     command[1] = 1; //B6
-    command[2] = 0; //B5
+    command[2] = 1; //B5
     command[3] = 0; //B4
-    command[4] = 1; //B3
+    command[4] = 0; //B3
     command[5] = 0; //B2
     command[6] = 0; //B1
     command[7] = 0; //B0
