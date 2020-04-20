@@ -56,7 +56,7 @@ int readPulses(double time) {
 
 void getDataFromChip(void) {
     chipSet();
-    uint8_t command[COMMAND_LENGTH] = {ARRAY_INIT_VAL};
+    u_int8_t command[COMMAND_LENGTH] = {ARRAY_INIT_VAL};
     
     //enables writing to chip.
     command[0] = 1; //B7
@@ -75,7 +75,7 @@ void getDataFromChip(void) {
     command[2] = 1; //B5
     command[3] = 0; //B4
     command[4] = 0; //B3
-    command[5] = 0 //B2
+    command[5] = 0; //B2
     command[6] = 1; //B1
     command[7] = 1; //B0
     wiringPiSPIDataRW (CHIP_CHANNEL, command, COMMAND_LENGTH);
@@ -101,7 +101,7 @@ void getDataFromChip(void) {
 
 void *useChip(void *ptr) {
     getDataFromChip();
-
+    return NULL;
 }
 
 void *useSpeedSensor(void *ptr) {

@@ -19,7 +19,7 @@
 void speedSensorSet(void);
 
 //reads the pulses that the speed sensor sees. It returns the pulses that were counted.
-int readPulses(int double);
+int readPulses(double time);
 
 //calculates and returns angular speed using formula omega = (2*PI*NumberOfPulses) / (Time * PulsesPerRotation)
 double calculateAngularSpeed(int totalPulses, double time);
