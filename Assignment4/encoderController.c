@@ -106,6 +106,6 @@ void *useChip(void *ptr) {
 
 void *useSpeedSensor(void *ptr) {
     double speed = calculateAngularSpeed(readPulses(TIME_TO_MEASURE), TIME_TO_MEASURE);
-    printf("The speed is; %f rad/s");
+    printf("The speed is; %f rad/s", speed);
     return NULL;
 }
