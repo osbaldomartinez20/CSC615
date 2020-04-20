@@ -38,17 +38,14 @@ double calculateAngularSpeed(int totalPulses, double time) {
 }
 
 int readPulses(double time) {
-    struct timespec start;
     int count = 0;
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    double end = start.tv_sec + start.tv_nsec + time;
+    double end = millis() + (1000 * time);
 
-    while (end > (start.tv_nsec + start.tv_sec)) {
+    while (end > millis()) {
         if(digitalRead(SPEED_SENSOR_PIN)) {
             count++;
             while(digitalRead(SPEED_SENSOR_PIN)){}
         }
-        clock_gettime(CLOCK_MONOTONIC, &start);
     }
 
     return count;

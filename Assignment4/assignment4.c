@@ -1,5 +1,4 @@
 #include <signal.h>
-#include <pthread.h>
 #include "encoderController.h"
 #include "motorsController.h"
 
@@ -24,7 +23,7 @@ void runMotorSpeedSensor(void) {
 int main() {
     signal(SIGINT, cleanUp);
 
-    pinSet()
+    pinSet();
     motorsSet();
     speedSensorSet();
 

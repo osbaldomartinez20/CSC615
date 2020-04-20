@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <wiringPi.h>
-#include <time.h>
 #include <wiringPiSPI.h>
 
 #define PI                    3.14159265358979323846  //the value of pi
