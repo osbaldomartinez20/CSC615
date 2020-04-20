@@ -8,7 +8,7 @@ void runMotorSpeedSensor(void) {
     void *m1 = &motor1;
 
     printf("initialize threads\n");
-    if ((s1 = pthread_create(&thread1, NULL, moveOneMotorForwardSixSec, m1))) {
+    if ((s1 = pthread_create(&thread1, NULL, moveOneMotorForward, m1))) {
         printf("thread creation failed: %i\n", s1);
     }
     if ((s2 = pthread_create(&thread2, NULL, useSpeedSensor, m1))) {
@@ -18,10 +18,6 @@ void runMotorSpeedSensor(void) {
     printf("join threads.\n");
     pthread_join( thread1, NULL);
     pthread_join( thread2, NULL);
-
-    delay(3000);
-
-    MOTOR_ONE_S;
 }
 
 int main() {

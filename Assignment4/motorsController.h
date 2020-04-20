@@ -71,7 +71,7 @@ void motorStop(int enabler, int control, int control2);
 //Thread function that makes the motor go forward for six seconds.
 //the void pointer must point to either 1 or 2 to indicate the motor to control. 
 //returns NULL.
-void *moveOneMotorForwardSixSec(void *ptr);
+void *moveOneMotorForward(void *ptr);
 
 //Thread function that makes the motor go forward.
 //the void pointer must point to either 1 or 2 to indicate the motor to control.
@@ -86,7 +86,7 @@ void *motorToControlForward2(void *ptr);
 //Thread function that makes the motor go backward for six seconds.
 //the void pointer must point to either 1 or 2 to indicate the motor to control. 
 //returns NULL.
-void *moveOneMotorBackwardSixSec(void *ptr);
+void *moveOneMotorBackward(void *ptr);
 
 //Thread function that makes the motor go backward.
 //the void pointer must point to either 1 or 2 to indicate the motor to control. 

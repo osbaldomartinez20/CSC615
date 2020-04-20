@@ -11,5 +11,5 @@ OBJ = assignment4.o motorsController.o encoderController.o
 %.o: %.c $(DEPS)
 	sudo $(CC) -c -o $@ $< $(CFLAGS)
 
-assignment3: $(OBJ)
+assignment4: $(OBJ)
 	sudo $(CC) -o $@ $^ $(CFLAGS) -lwiringPi -lpthread

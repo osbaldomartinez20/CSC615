@@ -13,6 +13,7 @@
 //All of the documentation of the functions can be found in motorsController.h
 #include "motorsController.h"
 
+//this mutex is to help maintain order when having code in critical sections.
 pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 
 void pinSet(void) {
@@ -128,8 +129,9 @@ void *motorToControlBackward(void *ptr) {
     return NULL;
 }
 
-void *moveOneMotorForwardSixSec(void *ptr) {
-    int motor = *((int *) ptr);
+void *moveOneMotorForward(void *ptr) {
+    int motor;
+    motor = *((int *) ptr);
     if (motor == 1) {
         MOTOR_ONE_F;
         delay(6000);
@@ -142,15 +144,16 @@ void *moveOneMotorForwardSixSec(void *ptr) {
     return NULL;
 }
 
-void *moveOneMotorBackwardSixSec(void *ptr) {
-    int motor = *((int *) ptr);
+void *moveOneMotorBackward(void *ptr) {
+    int motor;
+    motor = *((int *) ptr);
     if (motor == 1) {
         MOTOR_ONE_B;
-        delay(6000);
+        delay(1000);
         MOTOR_ONE_S;
     } else {
         MOTOR_TWO_B;
-        delay(6000);
+        delay(1000);
         MOTOR_TWO_S;
     } 
     return NULL;

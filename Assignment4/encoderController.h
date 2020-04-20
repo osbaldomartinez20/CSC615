@@ -1,9 +1,13 @@
 #ifndef ENCODERCONTROLLER_H_   
 #define ENCODERCONTROLLER_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <wiringPi.h>
 #include <time.h>
 #include <wiringPiSPI.h>
-#include "motorsController.h"
 
 #define PI                    3.14159265358979323846  //the value of pi
 #define NUMBER_OF_MOTORS      2           //This defines the number of motors being used.
