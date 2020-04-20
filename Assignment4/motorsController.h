@@ -2,7 +2,7 @@
 * Class: CSC-615-01 Spring 2020
 * Name: Osbaldo Martinez
 * Student ID: 916754207
-* Project: <Assignment 3 - Motors>
+* Project: <Assignment 4 - Motors>
 *
 * File: <motorsController.h>
 *
@@ -16,7 +16,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
 #include <pthread.h>
 #include <unistd.h>
 #include <wiringPi.h>
@@ -69,6 +68,11 @@ void motorMoveWithDecreasingPow(int enabler, int control, int control2, int dire
 //and makes the motor stop.
 void motorStop(int enabler, int control, int control2);
 
+//Thread function that makes the motor go forward for six seconds.
+//the void pointer must point to either 1 or 2 to indicate the motor to control. 
+//returns NULL.
+void *moveOneMotorForwardSixSec(void *ptr);
+
 //Thread function that makes the motor go forward.
 //the void pointer must point to either 1 or 2 to indicate the motor to control.
 //returns NULL.
@@ -78,6 +82,11 @@ void *motorToControlForward(void *ptr);
 //the void pointer must point to either 1 or 2 to indicate the motor to control.
 //returns NULL.
 void *motorToControlForward2(void *ptr);
+
+//Thread function that makes the motor go backward for six seconds.
+//the void pointer must point to either 1 or 2 to indicate the motor to control. 
+//returns NULL.
+void *moveOneMotorBackwardSixSec(void *ptr);
 
 //Thread function that makes the motor go backward.
 //the void pointer must point to either 1 or 2 to indicate the motor to control. 
