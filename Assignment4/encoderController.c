@@ -22,15 +22,15 @@ void chipSet(void) {
 }
 
 void writeSpeed(int motor, double speed) {
-    pthread_mutex_lock( &mutex1 );
+    pthread_mutex_lock( &m );
     MOTORS_SPEED[motor] = speed;
-    pthread_mutex_unlock( &mutex1 );
+    pthread_mutex_unlock( &m );
 }
 
 double readSpeed(int motor) {
-    pthread_mutex_lock( &mutex1 );
+    pthread_mutex_lock( &m );
     return MOTORS_SPEED[motor];
-    pthread_mutex_unlock( &mutex1 );
+    pthread_mutex_unlock( &m );
 }
 
 double calculateAngularSpeed(int totalPulses, double time) {

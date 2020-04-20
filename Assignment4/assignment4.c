@@ -24,5 +24,9 @@ void runMotorSpeedSensor(void) {
 int main() {
     signal(SIGINT, cleanUp);
 
+    pinSet()
+    motorsSet();
+    speedSensorSet();
+
     runMotorSpeedSensor();
 }
