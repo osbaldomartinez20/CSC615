@@ -129,36 +129,6 @@ void *motorToControlBackward(void *ptr) {
     return NULL;
 }
 
-void *moveOneMotorForward(void *ptr) {
-    int motor;
-    motor = *((int *) ptr);
-    if (motor == 1) {
-        MOTOR_ONE_F;
-        delay(6000);
-        MOTOR_ONE_S;
-    } else {
-        MOTOR_TWO_F;
-        delay(6000);
-        MOTOR_TWO_S;
-    }
-    return NULL;
-}
-
-void *moveOneMotorBackward(void *ptr) {
-    int motor;
-    motor = *((int *) ptr);
-    if (motor == 1) {
-        MOTOR_ONE_B;
-        delay(1000);
-        MOTOR_ONE_S;
-    } else {
-        MOTOR_TWO_B;
-        delay(1000);
-        MOTOR_TWO_S;
-    } 
-    return NULL;
-}
-
 void runMotors(void) {
     printf("initialize vars\n");
     pthread_t thread1, thread2, t1, t2;

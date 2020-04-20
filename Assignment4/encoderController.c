@@ -1,7 +1,7 @@
 #include "encoderController.h"
 
 //this mutex is to help maintain order when having code in critical sections.
-pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
 
 //This array contains the speed of each motor.
 //Motor 1 at index 0, Motor 2 at index 1 and so on.
@@ -106,6 +106,6 @@ void *useChip(void *ptr) {
 
 void *useSpeedSensor(void *ptr) {
     double speed = calculateAngularSpeed(readPulses(TIME_TO_MEASURE), TIME_TO_MEASURE);
-    printf("The speed is; %f rad/s", speed);
+    printf("The speed is: %f rad/s\n", speed);
     return NULL;
 }

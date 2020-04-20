@@ -13,6 +13,7 @@
 //All of the documentation of the functions can be found in motorsController.h
 #include "motorsController.h"
 
+//this mutex is to help maintain order when having code in critical sections.
 pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 
 void pinSet(void) {

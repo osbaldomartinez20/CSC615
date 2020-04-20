@@ -1,4 +1,5 @@
 #include <signal.h>
+#include <pthread.h>
 #include "encoderController.h"
 #include "motorsController.h"
 
@@ -8,10 +9,10 @@ void runMotorSpeedSensor(void) {
     void *m1 = &motor1;
 
     printf("initialize threads\n");
-    if ((s1 = pthread_create(&thread1, NULL, moveOneMotorForward, m1))) {
+    if ((s1 = pthread_create(&thread1, NULL, motorToControlForward, m1))) {
         printf("thread creation failed: %i\n", s1);
     }
-    if ((s2 = pthread_create(&thread2, NULL, useSpeedSensor, m1))) {
+    if ((s2 = pthread_create(&thread2, NULL, useSpeedSensor, NULL))) {
         printf("thread creation failed: %i\n", s2);
     }
 
