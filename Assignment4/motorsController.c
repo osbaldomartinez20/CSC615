@@ -44,7 +44,7 @@ void motorsSet(void) {
 
 void motorMove(int enabler, int control, int control2, int direction) {
     digitalWrite(enabler, HIGH);
-    softPwmWrite(enabler, 75);
+    softPwmWrite(enabler, 50);
 
     if(direction) {
         digitalWrite(control, LOW);
@@ -101,8 +101,12 @@ void *motorToControlForward(void *ptr) {
     motor = *((int *) ptr);
     if (motor == 1) {
         MOTOR_ONE_F;
+	delay(1000);
+	MOTOR_ONE_S;
     } else {
         MOTOR_TWO_F;
+	delay(1000);
+	MOTOR_TWO_S;
     }
     return NULL;
 }

@@ -15,14 +15,13 @@ void speedSensorSet(void) {
 }
 
 void chipSet(void) {
-    wiringPiSetup();
+	wiringPiSetup();
     if (wiringPiSPISetup (CHIP_CHANNEL, CLOCK_SPEED) < 0) {
         printf ("Unable to open SPI device 0:\n") ;
         exit (1) ;
    }
-   pinMode(12, OUTPUT);
-   pinMode(13,INPUT);
-   pinMode(14, OUTPUT);
+
+    pinMode(10,OUTPUT);
 }
 
 void writeSpeed(int motor, double speed) {
@@ -53,7 +52,7 @@ int readPulses(double time) {
             while(digitalRead(SPEED_SENSOR_PIN)){}
         }
     }
-    printf("Total count: %d\n", count)
+    printf("Total count: %d\n", count);
 
     return count;
 }
@@ -63,43 +62,47 @@ void getDataFromChip(void) {
     u_int8_t command[COMMAND_LENGTH] = {ARRAY_INIT_VAL};
     
     //enables writing to chip.
-    command[0] = 1; //B7
-    command[1] = 0; //B6
-    command[2] = 0; //B5
-    command[3] = 0; //B4
-    command[4] = 1; //B3
-    command[5] = 0; //B2
-    command[6] = 0; //B1
-    command[7] = 0; //B0
-    wiringPiSPIDataRW (CHIP_CHANNEL, command, COMMAND_LENGTH);
+   // digitalWrite(10,LOW);
+    command[0] = 0x88; 
+    wiringPiSPIDataRW (CHIP_CHANNEL, command, 8);
 
     //write data to chip
-    command[0] = 0; //B7
-    command[1] = 0; //B6
-    command[2] = 0; //B5
-    command[3] = 0; //B4
-    command[4] = 0; //B3
-    command[5] = 0; //B2
-    command[6] = 0; //B1
-    command[7] = 0; //B0
-    wiringPiSPIDataRW (CHIP_CHANNEL, command, COMMAND_LENGTH);
+    command[0] = 0x00; 
+    wiringPiSPIDataRW (CHIP_CHANNEL, command, 8);
+   // digitalWrite(10,HIGH);
 
-    delay(1000 * TIME_TO_MEASURE);
+    delay(10);
+
+   // digitalWrite(10,LOW);
+    command[0] = 0x98;
+    wiringPiSPIDataRW(0, command, 8);
+    for (int i = 0; i < 4; i++) {
+	   command[0] = 0x00;
+	  wiringPiSPIDataRW(0, command, 1);
+    }
+   // digitalWrite(10, HIGH);
+
+    delay(10);
+
+   // digitalWrite(10,LOW);
+    command[0] = 0xE0;
+    wiringPiSPIDataRW(0, command,1);
+   // digitalWrite(10, HIGH);
+
+    delay(1000);  
 
     //reads the data
-    command[0] = 0; //B7
-    command[1] = 1; //B6
-    command[2] = 1; //B5
-    command[3] = 0; //B4
-    command[4] = 0; //B3
-    command[5] = 0; //B2
-    command[6] = 0; //B1
-    command[7] = 0; //B0
-    wiringPiSPIDataRW(CHIP_CHANNEL, command, COMMAND_LENGTH);
+   // digitalWrite(10,LOW);
+    command[0] = 0x70;
+    wiringPiSPIDataRW(CHIP_CHANNEL, command, 8);
+
+   // digitalWrite(10,HIGH);
+    
 
     for(int i = 0; i < COMMAND_LENGTH; i++) {
         printf("Data at %d: %02X\n", i, command[i]);
     }
+
 
 }
 

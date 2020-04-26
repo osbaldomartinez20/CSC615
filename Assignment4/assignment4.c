@@ -11,7 +11,7 @@ void runMotorSpeedSensor(void) {
     if ((s1 = pthread_create(&thread1, NULL, motorToControlForward, m1))) {
         printf("thread creation failed: %i\n", s1);
     }
-    if ((s2 = pthread_create(&thread2, NULL, useChip, NULL))) {
+    if ((s2 = pthread_create(&thread2, NULL, useChip,NULL))) {
         printf("thread creation failed: %i\n", s2);
     }
 

@@ -13,8 +13,8 @@
 #define PULSES_PER_ROTATION   20          //The number of holes in the wheel encoder. The speed sensor reads each hole as a pulse.
 #define SPEED_SENSOR_PIN      27          //pin 36(GPIO 16)
 #define TIME_TO_MEASURE       1.0         //Time frame used to measure pulses.
-#define CLOCK_SPEED           20000000    //The ls7366r clock speed at 3v3 in HZ.
-#define CHIP_CHANNEL          0           //Channel being used by chip.
+#define CLOCK_SPEED           200000000    //The ls7366r clock speed at 3v3 in HZ.
+#define CHIP_CHANNEL          1           //Channel being used by chip.
 #define COMMAND_LENGTH        8           //The length of commands for the chip.
 #define ARRAY_INIT_VAL        0           //Initial value for array elements.
 
