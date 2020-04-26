@@ -1,3 +1,16 @@
+/**************************************************************
+* Class: CSC-615-01 Spring 2020
+* Name: Osbaldo Martinez
+* Student ID: 916754207
+* Project: <Assignment 4 - Motors and Speed Encoder>
+*
+* File: <encoderController.c>
+*
+* Description: This file contains the functions necessary to make the speed
+*              encoder count and to display the speed given the encoder's info and
+*              the sensor's count.
+**************************************************************/
+//All of the documentation of the functions can be found in encoderController.h
 #include "encoderController.h"
 
 //this mutex is to help maintain order when having code in critical sections.
@@ -38,6 +51,10 @@ double readSpeed(int motor) {
 
 double calculateAngularSpeed(int totalPulses, double time) {
     return (2.0 * PI * totalPulses) / (time * PULSES_PER_ROTATION);
+}
+
+double calculateSpeed(double diameter, double angularSpeed) {
+    return ((diameter / 2) / 100) * angularSpeed;
 }
 
 int readPulses(double time) {
@@ -112,7 +129,9 @@ void *useChip(void *ptr) {
 }
 
 void *useSpeedSensor(void *ptr) {
-    double speed = calculateAngularSpeed(readPulses(TIME_TO_MEASURE), TIME_TO_MEASURE);
-    printf("The speed is: %f rad/s\n", speed);
+    double aSpeed = calculateAngularSpeed(readPulses(TIME_TO_MEASURE), TIME_TO_MEASURE);
+    double speed = calculateSpeed(ENCODER_DIAMETER, aSpeed);
+    printf("The angular speed is: %f rad/s\n", aSpeed);
+    printf("The linear speed is: %f m/s\n", speed);
     return NULL;
 }

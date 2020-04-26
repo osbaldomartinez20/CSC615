@@ -2,7 +2,7 @@
 * Class: CSC-615-01 Spring 2020
 * Name: Osbaldo Martinez
 * Student ID: 916754207
-* Project: <Assignment 4 - Motors>
+* Project: <Assignment 4 - Motors and Speed Encoder>
 *
 * File: <motorsController.h>
 *

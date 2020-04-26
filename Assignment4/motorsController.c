@@ -2,7 +2,7 @@
 * Class: CSC-615-01 Spring 2020
 * Name: Osbaldo Martinez
 * Student ID: 916754207
-* Project: <Assignment 4 - Motors>
+* Project: <Assignment 4 - Motors and Speed Encoder>
 *
 * File: <motorsController.c>
 *
@@ -101,12 +101,12 @@ void *motorToControlForward(void *ptr) {
     motor = *((int *) ptr);
     if (motor == 1) {
         MOTOR_ONE_F;
-	delay(1000);
-	MOTOR_ONE_S;
+	    delay(1000);
+	    MOTOR_ONE_S;
     } else {
         MOTOR_TWO_F;
-	delay(1000);
-	MOTOR_TWO_S;
+	    delay(1000);
+	    MOTOR_TWO_S;
     }
     return NULL;
 }
