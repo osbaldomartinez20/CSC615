@@ -26,6 +26,14 @@ void pinSet(void) {
     pinMode(MOTOR_TWO_ENABLER, OUTPUT);
     pinMode(MOTOR_TWO_CONTROL, OUTPUT);
     pinMode(MOTOR_TWO_CONTROL_TWO, OUTPUT);
+
+    pinMode(MOTOR_THREE_ENABLER, OUTPUT);
+    pinMode(MOTOR_THREE_CONTROL, OUTPUT);
+    pinMode(MOTOR_THREE_CONTROL_TWO, OUTPUT);
+
+    pinMode(MOTOR_FOUR_ENABLER, OUTPUT);
+    pinMode(MOTOR_FOUR_CONTROL, OUTPUT);
+    pinMode(MOTOR_FOUR_CONTROL_TWO, OUTPUT);
 }
 
 void motorsSet(void) {
@@ -37,6 +45,16 @@ void motorsSet(void) {
     }
 
     if((status = softPwmCreate(MOTOR_TWO_ENABLER, 0, 100)) != 0) {
+        printf("PWN could not be established.\n");
+        exit(status);
+    }
+
+    if((status = softPwmCreate(MOTOR_THREE_ENABLER, 0, 100)) != 0) {
+        printf("PWN could not be established.\n");
+        exit(status);
+    }
+
+    if((status = softPwmCreate(MOTOR_FOUR_ENABLER, 0, 100)) != 0) {
         printf("PWN could not be established.\n");
         exit(status);
     }
@@ -89,9 +107,9 @@ void *motorToControlForward2(void *ptr) {
     int motor;
     motor = *((int *) ptr);
     if (motor == 1) {
-        MOTOR_ONE_F_D;
+       // MOTOR_ONE_F_D;
     } else {
-        MOTOR_TWO_F_D;
+       // MOTOR_TWO_F_D;
     }
     return NULL;
 }
@@ -101,8 +119,12 @@ void *motorToControlForward(void *ptr) {
     motor = *((int *) ptr);
     if (motor == 1) {
         MOTOR_ONE_F;
-    } else {
-        MOTOR_TWO_F;
+    } else if(motor == 2){
+        MOTOR_TWO_F; 
+    } else if(motor == 3) {
+        MOTOR_THREE_F;
+    } else if(motor == 4) {
+        MOTOR_FOUR_F;
     }
     return NULL;
 }
@@ -111,9 +133,9 @@ void *motorToControlBackward2(void *ptr) {
     int motor;
     motor = *((int *) ptr);
     if (motor == 1) {
-        MOTOR_ONE_B_D;
+       // MOTOR_ONE_B_D;
     } else {
-        MOTOR_TWO_B_D; 
+       // MOTOR_TWO_B_D; 
     }
     return NULL;
 }
@@ -132,9 +154,11 @@ void *motorToControlBackward(void *ptr) {
 void runMotors(void) {
     printf("initialize vars\n");
     pthread_t thread1, thread2, t1, t2;
-    int s1, s2, motor1 = 1, motor2 = 2;
+    int s1, s2, s3, s4, motor1 = 1, motor2 = 2, motor3 = 3, motor4 = 4;
     void *m1 = &motor1;
     void *m2 = &motor2;
+    void *m3 = &motor3;
+    void *m4 = &motor4;
 
     printf("initialize threads\n");
     if ((s1 = pthread_create(&thread1, NULL, motorToControlForward, m1))) {
@@ -142,6 +166,12 @@ void runMotors(void) {
     }
     if ((s2 = pthread_create(&thread2, NULL, motorToControlForward, m2))) {
         printf("thread creation failed: %i\n", s2);
+    }
+    if ((s3 = pthread_create(&thread1, NULL, motorToControlForward, m3))) {
+        printf("thread creation failed: %i\n", s3);
+    }
+    if ((s4 = pthread_create(&thread2, NULL, motorToControlForward, m4))) {
+        printf("thread creation failed: %i\n", s4);
     }
 
     printf("join threads.\n");
@@ -154,6 +184,7 @@ void runMotors(void) {
     MOTOR_ONE_S;
     MOTOR_TWO_S;	
 
+    /*
     printf("initialize other threads.\n");
     if ((s1 = pthread_create(&t1, NULL, motorToControlBackward, m1))) {
         printf("thread creation failed: %i\n", s1);
@@ -171,6 +202,7 @@ void runMotors(void) {
 	printf("stop motors\n");
     MOTOR_ONE_S;
     MOTOR_TWO_S;
+    */
 }
 
 void runMotors2(void) {
@@ -218,12 +250,14 @@ void runMotorsWithDiffPower(void) {
 }
 
 void runMotorsWithDiffPower2(void) {
-    MOTOR_ONE_B_D;
-    MOTOR_TWO_B_D;
+   // MOTOR_ONE_B_D;
+   // MOTOR_TWO_B_D;
 }
 
 void cleanUp() {
     MOTOR_ONE_S;
     MOTOR_TWO_S;
+    MOTOR_THREE_S;
+    MOTOR_FOUR_S;
     exit(0);
 }
